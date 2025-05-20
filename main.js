@@ -2,20 +2,24 @@ console.log("Hola desde electron");
 
 const {app, BrowserWindow, Menu} = require('electron');
 const {setMainMenu} = require('./menu');
+const path= require("path");
 
 
 const createWindow = () => {
-    const window = new BrowserWindow({
+    const mainWindow = new BrowserWindow({
         width: 800,
         height: 600,
+        webPreferences: {
+            preload: path.join(__dirname, 'preload.js')
+        }
     });
 
-    window.loadFile('index.html');
+    mainWindow.loadFile('index.html');
+    setMainMenu(mainWindow);
 }
 
-setMainMenu();
 
-app.whenReady().then(()=> {
+app.whenReady().then(() => {
     createWindow()
 });
 

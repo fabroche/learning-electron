@@ -1,6 +1,6 @@
 const {app, Menu} = require('electron');
 
-const setMainMenu = () => {
+const setMainMenu = (mainWindow) => {
     const template = [
         {
             label: 'File',
@@ -31,13 +31,13 @@ const setMainMenu = () => {
                         {
                             label: 'Light',
                             click: () => {
-                                app.setTheme('light')
+                                mainWindow.webContents.send('update-theme', 'light')
                             }
                         },
                         {
                             label: 'Dark',
                             click: () => {
-                                app.setTheme('dark')
+                                mainWindow.webContents.send('update-theme', 'dark')
                             }
                         }
                     ]
