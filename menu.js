@@ -1,10 +1,27 @@
-const {app, Menu} = require('electron');
+const {app, Menu, dialog} = require('electron');
 
 const setMainMenu = (mainWindow) => {
     const template = [
         {
             label: 'File',
             submenu: [
+                {
+                    label: 'Open',
+                    click: () => {
+                        dialog.showOpenDialog(mainWindow, {
+                            filters: [
+                                {name: 'Images', extensions: ['jpg', 'jpeg', 'png']}
+                            ],
+                            properties: ['openFile', 'openFile']
+                        }).then(result => {
+                            console.log(result.canceled)
+                            console.log(result.filePaths)
+                        }).catch(err => {
+                            console.log(err)
+                        })
+                    }
+                },
+                {type: 'separator'},
                 {role: 'reload'},
                 {role: 'toggleDevTools'},
                 {type: 'separator'},
